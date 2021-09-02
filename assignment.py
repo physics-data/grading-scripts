@@ -29,6 +29,12 @@ def grade(input_csv: str, output_xls: str, white_raw: int, white_percent: int, b
     # generate for each student
     for i, l in merged.iterrows():
         black, white, note = l['黑盒成绩'], l['白盒成绩'], l['备注']
+        # check score
+        if black > black_raw:
+            print(f'WARNING: line {l} blackbox overflow: {fformat(black)}/{black_raw}')
+        if white > white_raw:
+            print(f'WARNING: line {l} white overflow: {fformat(white)}/{white_raw}')
+        # check submit status
         if (type(note) == float and math.isnan(note)) or (note == 'nan' or note == ''):
             note = '无'
         submitted = not math.isnan(black) and not math.isnan(white)
