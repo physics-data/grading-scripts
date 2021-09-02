@@ -1,5 +1,7 @@
 # 课程评分脚本
 
+请先使用 `python3 -m pip install -r requirements.txt` 安装依赖。
+
 ## 小作业
 
 ```bash

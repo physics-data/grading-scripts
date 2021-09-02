@@ -7,7 +7,7 @@ import pandas as pd
 
 def fformat(f: float):
     if float(int(f)) == f:
-        return f'{f}'
+        return f'{int(f)}'
     else:
         return f'{f:0.2f}'
 
