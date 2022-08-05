@@ -39,10 +39,10 @@ def grade(
     # read input files
     late_df = late_df.query("迟交作业 == @assignment_name")
     # merge all data into one df
-    merged = xls_df.merge(csv_df, on=["学号", "姓名"])
-    merged = merged.merge(late_df, on=["学号", "姓名"])
+    merged = xls_df.merge(csv_df, on=["学号", "姓名"], how="left")
+    merged = merged.merge(late_df, on=["学号", "姓名"], how="left")
 
-    print(f"All late submissions for {assignment_name}: {late_df}")
+    print(f"All late submissions for {assignment_name}:\n{late_df}")
 
     # generate for each student
     for i, l in merged.iterrows():
@@ -69,6 +69,7 @@ def grade(
                 detail += f"黑盒：{fformat(black)}/{black_raw}\n"
             if has_white:
                 grade += white / white_raw * white_percent
+                detail += f"白盒：{fformat(white)}/{white_raw}\n"
             detail += f"总分：{fformat(grade)}\n评语：{note}\n"""
             if late_submission:
                 coeff = decay_coeff(late_days)
