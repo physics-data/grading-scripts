@@ -18,6 +18,10 @@ def decay_coeff(late_days: int):
     return min(0.9, 0.95 ** late_days)
 
 
+def is_empty_text(t):
+    return (type(t) == float and math.isnan(t)) or (t == "nan" or t == "")
+
+
 def grade(
     csv_df: pd.DataFrame, xls_df: pd.DataFrame, late_df: pd.DataFrame, assignment_name: str,
     white_raw: int, white_percent: int, black_raw: int, black_percent: int,
@@ -53,7 +57,7 @@ def grade(
         if white > white_raw:
             print(f"WARNING: line {l} white-box overflow: {fformat(white)}/{white_raw}")
         # check submit status
-        if (type(note) == float and math.isnan(note)) or (note == "nan" or note == ""):
+        if is_empty_text(note):
             note = "无"
         submitted = not math.isnan(black) and not math.isnan(white)
 
@@ -75,6 +79,10 @@ def grade(
                 coeff = decay_coeff(late_days)
                 grade *= coeff
                 detail += f"迟交天数：{fformat(late_days)}\n迟交系数：{fformat(coeff)}"
+            late_grader = l["评阅人"]
+            # always use grader from late submission csv
+            if not is_empty_text(late_grader):
+                grader = late_grader
             if grader != "":
                 detail += f"\n评阅人：{grader}"
         else:

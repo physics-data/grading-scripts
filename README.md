@@ -11,7 +11,7 @@ python3 ./grade_assignment.py result.csv late.csv aplusb wlxt.xls output.xls [-b
 参数：
 
 * `result.csv`：[classroom-helper](https://git.tsinghua.edu.cn/physics-data/vscode-course-helper) 生成的 CSV 文件
-* `late.csv`：迟交 CSV 文件，包含四列：`学号`、`姓名`、`迟交作业`、`迟交天数`
+* `late.csv`：迟交 CSV 文件，包含四列：`学号`、`姓名`、`迟交作业`、`迟交天数`、`评阅人`（覆盖默认指定的 `-g`）
 * `aplusb`：作业名称（用于匹配 `late.csv` 的记录）
 * `wlxt.xls`：网络学堂导出的作业成绩模板
 * `output.xls`：用于上传的结果文件
