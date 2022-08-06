@@ -74,7 +74,7 @@ def grade(
             if late_submission:
                 coeff = decay_coeff(late_days)
                 grade *= coeff
-                detail += f"迟交天数：{late_days}\n迟交系数{coeff}"
+                detail += f"迟交天数：{late_days}\n迟交系数：{coeff}"
             if grader != "":
                 detail += f"\n评阅人：{grader}"
         else:
