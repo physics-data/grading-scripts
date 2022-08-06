@@ -81,10 +81,9 @@ def grade(
                 detail += f"迟交天数：{fformat(late_days)}\n迟交系数：{fformat(coeff)}"
             late_grader = l["评阅人"]
             # always use grader from late submission csv
-            if not is_empty_text(late_grader):
-                grader = late_grader
-            if grader != "":
-                detail += f"\n评阅人：{grader}"
+            curr_grader = late_grader if not is_empty_text(late_grader) else grader
+            if curr_grader != "":
+                detail += f"\n评阅人：{curr_grader}"
         else:
             grade = 0
             detail = "未提交"
@@ -94,7 +93,7 @@ def grade(
 
         merged.loc[i, "成绩"] = grade
         merged.loc[i, "提交作业状态"] = "已交"
-        merged.loc[i, "成绩（录入项）"] = input_grade
+        merged.loc[i, "成绩（录入项）"] = int(input_grade)
         merged.loc[i, "评语（录入项）"] = detail
 
     return merged
