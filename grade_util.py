@@ -47,6 +47,7 @@ def grade(
     merged = merged.merge(late_df, on=["学号", "姓名"], how="left")
 
     print(f"All late submissions for {assignment_name}:\n{late_df}")
+    not_submitted = []
 
     # generate for each student
     for i, l in merged.iterrows():
@@ -59,7 +60,7 @@ def grade(
         # check submit status
         if is_empty_text(note):
             note = "无"
-        submitted = not math.isnan(black) and not math.isnan(white)
+        submitted = not ((has_black and math.isnan(black)) or (has_white and math.isnan(white)))
 
         late_days = l["迟交天数"]
         late_submission = not math.isnan(late_days) and late_days > 0
@@ -87,6 +88,7 @@ def grade(
         else:
             grade = 0
             detail = "未提交"
+            not_submitted.append((l["姓名"], l["学号"]))
 
         # workaround for web learning
         input_grade = min(grade, 100)
@@ -96,6 +98,7 @@ def grade(
         merged.loc[i, "成绩（录入项）"] = int(input_grade)
         merged.loc[i, "评语（录入项）"] = detail
 
+    print(f"无成绩学生：{not_submitted}")
     return merged
 
 
