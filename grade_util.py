@@ -79,7 +79,9 @@ def grade(
             if late_submission:
                 coeff = decay_coeff(late_days)
                 grade *= coeff
-                detail += f"迟交天数：{fformat(late_days)}\n迟交系数：{fformat(coeff)}"
+                detail += f"迟交天数：{fformat(late_days)}"
+                if coeff != 1:
+                    detail += f"\n迟交系数：{fformat(coeff)}"
             late_grader = l["评阅人"]
             # always use grader from late submission csv
             curr_grader = late_grader if not is_empty_text(late_grader) else grader
